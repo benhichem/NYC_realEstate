@@ -5,18 +5,18 @@ import puppeteer from 'puppeteer-extra'
 import { Page, Browser } from 'puppeteer'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import Logger from "./logger"
-puppeteer.use(StealthPlugin())
+
 
 // Get the type of the options parameter for puppeteer.launch
 type LaunchOptions = Parameters<typeof puppeteer.launch>[0]
 
 export default class PuppeteerScrapper<T> {
     protected $page: Page | null
-    private _browser: Browser | null
+    protected _browser: Browser | null
     protected payload: T
     private browser_option: LaunchOptions
 
-    constructor(payl: T, browser_options?: LaunchOptions) {
+    constructor(payl: T, browser_options?: LaunchOptions, private Dev: boolean = true) {
         this.$page = null
         this._browser = null
         this.payload = payl
@@ -41,7 +41,8 @@ export default class PuppeteerScrapper<T> {
         }
     }
     private async _setup() {
-        Logger.info('Initiating Browser ... ')
+        Logger.info('Initiating Browser ... ');
+        puppeteer.use(StealthPlugin())
         this._browser = await puppeteer.launch(this.browser_option)
 
         this.$page = await this._browser.newPage()
@@ -85,7 +86,7 @@ export default class PuppeteerScrapper<T> {
     public async exec() {
         await this._setup()
         await this.$extract()
-        await this._cleanup();
+        if (this.Dev) await this._cleanup()
         return this.payload
     }
 }
