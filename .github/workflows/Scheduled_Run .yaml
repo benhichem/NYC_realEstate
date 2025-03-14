@@ -1,18 +1,19 @@
-name: Daily Node.js Job with GCP Authentication
+name: Node.js Job with GCP Authentication
 
 on:
-  # schedule:
-    # Runs at 00:00 UTC every day
-    #- cron: '0 0 * * *'
-  
-  # Allow manual triggering for testing
+  # Run on commits to the main branch
   push:
     branches: [ main ]
   
+  # Optional: Run on pull requests to main
+  pull_request:
+    branches: [ main ]
+  
+  # Keep workflow_dispatch for manual triggering
   workflow_dispatch:
 
 jobs:
-  scheduled-node-job:
+  node-job:
     runs-on: ubuntu-latest
     
     # Required for GCP Workload Identity Federation
@@ -22,10 +23,10 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -57,10 +58,10 @@ jobs:
           # Optional: Pass the credentials path if your app needs it directly
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
       
-      # Optional: Upload any artifacts or logs
+      # Updated to use upload-artifact@v4
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: application-logs
           path: logs/
