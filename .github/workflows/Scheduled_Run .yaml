@@ -1,0 +1,67 @@
+name: Daily Node.js Job with GCP Authentication
+
+on:
+  # schedule:
+    # Runs at 00:00 UTC every day
+    #- cron: '0 0 * * *'
+  
+  # Allow manual triggering for testing
+  push:
+    branches: [ main ]
+  
+  workflow_dispatch:
+
+jobs:
+  scheduled-node-job:
+    runs-on: ubuntu-latest
+    
+    # Required for GCP Workload Identity Federation
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: 'projects/YOUR_PROJECT_NUMBER/locations/global/workloadIdentityPools/YOUR_POOL_NAME/providers/YOUR_PROVIDER_ID'
+          service_account: 'YOUR_SERVICE_ACCOUNT@YOUR_PROJECT_ID.iam.gserviceaccount.com'
+      
+      # Optional: Setup gcloud CLI if needed
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+      
+      # Optional: Show which account we're using (for debugging)
+      - name: Verify authentication
+        run: gcloud auth list
+      
+      # Install dependencies and run your application
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run application
+        run: npm run start
+        env:
+          # Environment variables your app needs
+          NODE_ENV: production
+          # Optional: Pass the credentials path if your app needs it directly
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+      
+      # Optional: Upload any artifacts or logs
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: application-logs
+          path: logs/
+          retention-days: 7
