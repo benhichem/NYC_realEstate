@@ -34,29 +34,13 @@ export async function ExportDocument(docs: Array<any>, headers: Array<string>, s
         console.log('==========================================================================================');
         console.log(doc.title);
         console.log(doc.sheetCount);
-
-  /*       // Authenticate with the JWT client
-        await doc.useServiceAccountAuth({
-            client_email: credentials.client_email,
-            private_key: credentials.private_key
-        });
-
-        // Load the document
-        await doc.loadInfo();
-
-        // Get the first worksheet
         const worksheet = doc.sheetsByIndex[0];
+        await worksheet.setHeaderRow(headers)
 
-        // Set the header row
-        await worksheet.setHeaderRow(headers);
-
-        // Add the data rows
         await worksheet.addRows(docs).catch((error) => {
-            console.error('Error adding rows:', error);
-            throw error;
-        });
+            console.log(error)
+        })
 
-        console.log(`Successfully exported ${docs.length} rows to spreadsheet`); */
 
     } catch (error) {
         console.error('Failed to export to Google Spreadsheet:', error);
