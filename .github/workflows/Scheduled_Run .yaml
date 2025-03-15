@@ -51,7 +51,7 @@ jobs:
         run: npm install
       
       - name: Run application
-        run: npm run start
+        run: npm run google
         env:
           # Environment variables your app needs
           NODE_ENV: production

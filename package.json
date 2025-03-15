@@ -13,6 +13,7 @@
     "start": "npm run build && node --experimental-specifier-resolution=node .",
     "start:watch": "nodemon src/index.ts",
     "dev": "mprocs",
+    "google": "tsc && node dist/component/google/google_sheet_template",
     "lint": "eslint ./src/**/*.ts",
     "build": "npm run clear && tsc",
     "clear": "rimraf dist"
@@ -44,6 +45,7 @@
     "dotenv": "^16.4.7",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
+    "googleapis": "^146.0.0",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
     "puppeteer": "^24.2.0",
