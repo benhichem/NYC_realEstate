@@ -2,13 +2,10 @@ name: Node.js Job with GCP Authentication
 
 on:
   # Run on commits to the main branch
-  push:
-    branches: [ main ]
-  
-  # Optional: Run on pull requests to main
-  pull_request:
-    branches: [ main ]
-  
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'
+    
   # Keep workflow_dispatch for manual triggering
   workflow_dispatch:
 
