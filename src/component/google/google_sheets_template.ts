@@ -58,3 +58,15 @@ export async function ExportDocument(docs: Array<any>, headers: Array<string>, s
         throw error;
     }
 }
+
+
+(async () => {
+    const myData = [
+        { name: 'John', age: 30, email: 'john@example.com' },
+        { name: 'Jane', age: 28, email: 'jane@example.com' }
+    ];
+
+    const headers = ['name', 'age', 'email'];
+    const spreadsheetId = '1agc7jJHn4-3Qlv8-_32F7AFwyiBqjJwhiDDqLJrVnHw';
+    await ExportDocument(myData, headers, spreadsheetId)
+})()
