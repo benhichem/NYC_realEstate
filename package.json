@@ -13,7 +13,7 @@
     "start": "npm run build && node --experimental-specifier-resolution=node .",
     "start:watch": "nodemon src/index.ts",
     "dev": "mprocs",
-    "google": "tsc && node dist/component/google/google_sheet_template",
+    "google": "ts-node src/component/google/google_sheets_template.ts",
     "lint": "eslint ./src/**/*.ts",
     "build": "npm run clear && tsc",
     "clear": "rimraf dist"
