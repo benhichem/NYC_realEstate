@@ -1,6 +1,6 @@
-# 🏡 StreetEasy & Trulia Scraper  
+# 🏡 Scraper for Contact Details from Property Listings
 
-A web scraper that extracts **owner-listed rental and sold property data** from **StreetEasy** and **Trulia**, bypassing anti-bot measures using **Puppeteer Stealth**, **proxy rotation**, and **2Captcha API**. The extracted data is then sent to a **Google Sheet** for further analysis.  
+A web scraper that extracts **owner-listed rental and sold property data** from **StreetEasy**, **Trulia** and **appartments**, bypassing anti-bot measures using **Puppeteer Stealth**, **proxy rotation**, and **2Captcha API**. The extracted data is then sent to a **Google Sheet** for further analysis.  
 
 ## 🚀 Why This Project?  
 Many property listing websites, including **StreetEasy** and **Trulia**, are filled with broker-listed properties, making it difficult for buyers and renters to find direct owner listings. This scraper helps:  
@@ -60,4 +60,5 @@ The extracted data is saved to Google Sheets with the following columns:
  * puppeteer-extra-plugin-stealth – Bypasses bot detection
  * 2Captcha API – Solves captchas automatically
  * Google Sheets API – Stores scraped data
+ * Google Cloud Workload Identity Federation – Secure authentication for Google APIs without service account keys
 
