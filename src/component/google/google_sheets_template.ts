@@ -27,9 +27,14 @@ export async function ExportDocument(docs: Array<any>, headers: Array<string>, s
         const doc = new GoogleSpreadsheet(spreadSheetID, authClient);
 
 
-        console.log(credentials);
         console.log('==========================================================================================');
         console.log(doc)
+        let docInfo = await doc.loadInfo();
+        console.log(docInfo)
+        console.log('==========================================================================================');
+        console.log(doc.title);
+        console.log(doc.sheetCount);
+
   /*       // Authenticate with the JWT client
         await doc.useServiceAccountAuth({
             client_email: credentials.client_email,
